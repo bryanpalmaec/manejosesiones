@@ -13,10 +13,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Optional;
 
-@WebServlet({"/login", "/login.html"})
+@WebServlet({"/login","/login.html"})
 public class LoginServlet extends HttpServlet {
-    final static String USERNAME = "admin";
-    final static String PASSWORD = "12345";
+    final static String USERNAME = "username";
+    final static String PASSWORD = "password";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
                 out.println("<body class='bg-light d-flex align-items-center justify-content-center vh-100'>");
 
                 out.println("<div class='card shadow-lg p-4 text-center' style='width: 28rem;'>");
-                out.println("<h1 class='text-primary mb-3'>Hola " + usernameOptional.get() + "</h1>");
+                out.println("<h1 class='text-primary mb-3'>Hola " + usernameOptional.get() + " !</h1>");
                 out.println("<p class='lead text-muted mb-4'>Has iniciado sesión correctamente.</p>");
 
                 out.println("<div class='d-grid gap-2'>");
@@ -48,24 +48,24 @@ public class LoginServlet extends HttpServlet {
                 out.println("</body>");
                 out.println("</html>");
             }
-        } else {
+
+        }else {
             getServletContext().getRequestDispatcher("/login.jsp").forward(req, resp);
         }
     }
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         String username = req.getParameter("user");
         String password = req.getParameter("password");
 
-        if (USERNAME.equals(username) && PASSWORD.equals(password)) {
+        if(USERNAME.equals(username) && PASSWORD.equals(password)){
             HttpSession session = req.getSession();
             session.setAttribute(USERNAME, username);
 
-            resp.sendRedirect(req.getContextPath() + "/login.html");
+            resp.sendRedirect(req.getContextPath()+"/login.html");
 
-        } else {
-            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Lo sentimos no esta autorizado para el ingreso al sistema");
+        }else  {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Lo sentimos no esta autorizado para el ingreso al sistema");
         }
     }
 }
