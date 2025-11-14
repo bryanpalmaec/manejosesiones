@@ -11,7 +11,9 @@ package com.bryan.aplicacionweb.manejosesiones.services;
 import com.bryan.aplicacionweb.manejosesiones.models.Producto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductoService {
     List<Producto> listar();
+    Optional<Producto> porId(Long id);
 }

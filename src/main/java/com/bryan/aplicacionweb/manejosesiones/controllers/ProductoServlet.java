@@ -63,6 +63,7 @@ public class ProductoServlet extends HttpServlet {
             out.println("<th>Categoría</th>");
             if (usernameOptional.isPresent()) {
                 out.println("<th>Precio</th>");
+                out.println("<th>Opciones</th>");
             }
             out.println("</tr>");
             out.println("</thead>");
@@ -74,6 +75,11 @@ public class ProductoServlet extends HttpServlet {
                 out.println("<td>" + p.getCategoria() + "</td>");
                 if (usernameOptional.isPresent()) {
                     out.println("<td>$" + p.getPrecio() + "</td>");
+                    out.println("<td><a href=\""
+                            +req.getContextPath()
+                            +"/agregar-carro?id="
+                            +p.getIdProducto()
+                            +"\">Agregar Producto al carro</a></td>");
                 }
                 out.println("</tr>");
             }
