@@ -1,53 +1,98 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: bryan
-  Date: 14/11/2025
-  Time: 17:25
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="com.bryan.aplicacionweb.manejosesiones.models.*" %>
-<%-- Traemos la sesion Scriplets--%>
+
 <%
     DetalleCarro detalleCarro = (DetalleCarro) session.getAttribute("carro");
 %>
+
 <html>
 <head>
     <title>Carro de Compras</title>
+
+    <!-- Bootstrap CDN simple -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
 </head>
-<body>
-<h1>Carro de Compras</h1>
-<%
-    if (detalleCarro == null || detalleCarro.getItems().isEmpty()) {%>
-<p> Lo sentimos no hay productos en el carro de compras!</p>
-    <%} else {%>
-        <table>
-            <tr>
-                <td>id Producto</td>
-                <td>nombre</td>
-                <td>precio</td>
-                <td>cantidad</td>
-                <td>subtotal</td>
-            <tr>
-            <%
-            for(ItemCarro item : detalleCarro.getItems()){%>
-            <tr>
-            <td><%=item.getProducto().getIdProducto()%></td>
-            <td><%=item.getProducto().getNombre()%></td>
-            <td><%=item.getProducto().getPrecio()%></td>
-            <td><%=item.getCantidad()%></td>
-            <td><%=item.getSubtotal()%></td>
-            <tr>
-            <% }%>
-            <tr>
-            <td colspan="4" style="text-align:right">Total: </td>
-            <td><%=detalleCarro.getTotal()%></td>
+<body class="bg-light">
+
+<div class="container mt-4 p-4 bg-white rounded shadow">
+
+    <h1 class="mb-4 text-center">Carro de Compras</h1>
+
+    <%
+        if (detalleCarro == null || detalleCarro.getItems().isEmpty()) {
+    %>
+
+    <div class="alert alert-warning text-center">
+        Lo sentimos, no hay productos en el carro de compras.
+    </div>
+
+    <% } else {
+
+        double subtotal = detalleCarro.getTotal();
+        double iva = subtotal * 0.15;
+        double totalFinal = subtotal + iva;
+    %>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>Id Producto</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
         </tr>
-            </table>
+        </thead>
+        <tbody>
 
+        <%
+            for(ItemCarro item : detalleCarro.getItems()){
+        %>
+        <tr>
+            <td><%= item.getProducto().getIdProducto() %></td>
+            <td><%= item.getProducto().getNombre() %></td>
+            <td>$<%= item.getProducto().getPrecio() %></td>
+            <td><%= item.getCantidad() %></td>
+            <td>$<%= item.getSubtotal() %></td>
+        </tr>
+        <% } %>
 
-    <%}%>
-<p><a href="<%=request.getContextPath()%>/productos">SEGUIR COMPRANDO</a> </p>
-<p><a href="<%=request.getContextPath()%>/index.html">Volver</a> </p>
+        <!-- Subtotal -->
+        <tr class="fw-bold">
+            <td colspan="4" class="text-end">Subtotal:</td>
+            <td>$<%= subtotal %></td>
+        </tr>
+
+        <!-- IVA -->
+        <tr class="fw-bold">
+            <td colspan="4" class="text-end">IVA (15%):</td>
+            <td>$<%= iva %></td>
+        </tr>
+
+        <!-- Total final -->
+        <tr class="fw-bold table-success">
+            <td colspan="4" class="text-end">TOTAL:</td>
+            <td>$<%= totalFinal %></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <!-- Botón para descargar PDF -->
+    <form action="<%=request.getContextPath()%>/manejosesiones/generar-pdf" method="GET">
+        <button type="submit" class="btn btn-danger mb-3">
+            Descargar PDF
+        </button>
+    </form>
+
+    <% } %>
+
+    <a href="<%=request.getContextPath()%>/productos" class="btn btn-primary">Seguir Comprando</a>
+    <a href="<%=request.getContextPath()%>/index.html" class="btn btn-secondary">Volver</a>
+
+</div>
+
 </body>
 </html>
