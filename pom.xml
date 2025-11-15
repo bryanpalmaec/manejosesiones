@@ -35,15 +35,24 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- Kernel (obligatorio) -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>kernel</artifactId>
             <version>7.2.5</version>
         </dependency>
 
+        <!-- Layout (obligatorio para Paragraph, Table, IBlockElement, etc.) -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>layout</artifactId>
+            <version>7.2.5</version>
+        </dependency>
+
+        <!-- IO (muchas clases internas de PDF lo necesitan) -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>io</artifactId>
             <version>7.2.5</version>
         </dependency>
     </dependencies>

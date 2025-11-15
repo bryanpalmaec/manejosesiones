@@ -81,7 +81,7 @@
     </table>
 
     <!-- Botón para descargar PDF -->
-    <form action="<%=request.getContextPath()%>/manejosesiones/generar-pdf" method="GET">
+    <form action="<%=request.getContextPath()%>/generar-pdf" method="GET">
         <button type="submit" class="btn btn-danger mb-3">
             Descargar PDF
         </button>
