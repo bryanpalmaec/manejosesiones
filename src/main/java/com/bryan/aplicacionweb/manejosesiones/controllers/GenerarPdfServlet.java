@@ -47,7 +47,7 @@ public class GenerarPdfServlet extends HttpServlet {
 
             for (ItemCarro item : detalle.getItems()) {
                 table.addCell(String.valueOf(item.getProducto().getIdProducto()));
-                table.addCell(item.getProducto().getNombre());
+                table.addCell(item.getProducto().getNombreProducto());
                 table.addCell(String.valueOf(item.getProducto().getPrecio()));
                 table.addCell(String.valueOf(item.getCantidad()));
                 table.addCell(String.valueOf(item.getSubtotal()));

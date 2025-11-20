@@ -64,11 +64,40 @@ public class ProductoRepositorioJdbcImplement implements Repositorio<Producto> {
 
     @Override
     public void guardar(Producto producto) throws SQLException {
+        String sql;
+        if(producto.getIdProducto() != null && producto.getIdProducto() >0){
+            sql = "update producto set nombreCategoria=?, idCategoria=?, stock=?, precio=?, descripcion=? where idProducto=?"+
+                    " fecha_elabocacion=?, fecha_caducidad=? where id=?";
+        }else{
+            sql = "insert into producto (nombreCategoria, idCategoria, stock, precio, descripcion, codigo, fecha_elaboracion, fecha_caducidad,condicion)" +
+                    "values (?,?,?,?,?,?,?,?,1)";
+        }
+        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, producto.getNombreProducto());
+            stmt.setInt(2, producto.getStock());
+            stmt.setDouble(3, producto.getPrecio());
+            stmt.setString(4, producto.getDescripcion());
+            stmt.setString(5, producto.getCodigo());
+            stmt.setLong(6, producto.getCategoria().getIdCategoria());
+
+            if(producto.getIdProducto() != null && producto.getIdProducto() >0){
+                stmt.setLong(7, producto.getIdProducto());
+            }else{
+                stmt.setDate(7, Date.valueOf(producto.getFechaElaboracion()));
+                stmt.setDate(8, Date.valueOf(producto.getFechaCaducidad()));
+            }
+            stmt.executeUpdate();
+        }
 
     }
 
     @Override
     public void eliminar(Long id) throws SQLException {
+        String sql = "delete from producto where id=?";
+        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        }
 
     }
 }

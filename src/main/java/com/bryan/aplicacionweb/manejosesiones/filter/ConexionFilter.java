@@ -1,8 +1,10 @@
 package com.bryan.aplicacionweb.manejosesiones.filter;
 
+import com.bryan.aplicacionweb.manejosesiones.services.ServiceJdbcException;
 import com.bryan.aplicacionweb.manejosesiones.util.Conexion;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -44,11 +46,14 @@ public class ConexionFilter implements Filter {
                 // y se aplica los cambios a la base de datos
                 conn.commit();
                 //Si ocurre un errores durante el prcesamiento se captura la excepcion
-            } catch (SQLException e) {
+            } catch (SQLException | ServiceJdbcException e) {
                 //Se deshacer los cambios con un rollback y de esta forma se mantiene la DB
                 conn.rollback();
                 //Emviamos un codigo de error HTTP 500 al cliente indicando un problema
                 // interno con el servidor
+                ((HttpServletResponse) response).sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                e.getMessage());
+                e.printStackTrace();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
