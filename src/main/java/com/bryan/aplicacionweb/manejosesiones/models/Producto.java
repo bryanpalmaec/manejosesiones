@@ -1,5 +1,7 @@
 package com.bryan.aplicacionweb.manejosesiones.models;
 
+import java.time.LocalDate;
+
 /*
  * Autor:Bryan Palma
  * Fecha: 07/11/2025
@@ -8,46 +10,84 @@ package com.bryan.aplicacionweb.manejosesiones.models;
  * */
 public class Producto {
     private Long idProducto;
-    private String nombre;
-    private String categoria;
+    private String nombreProducto;
+    private Categoria categoria;
+    private int stock;
+    private String descripcion;
+    private String codigo;
     private Double precio;
+    private LocalDate fechaElaboracion;
+    private LocalDate fechaCaducidad;
+    private int condicion;
+
     /*
      **
      */
     public Producto() {
 
     }
-    /*
-     **
-     */
-    public Producto(Long idProducto, String nombre, String categoria, Double precio) {
+
+    public Producto(Long idProducto, String nombreProducto, Categoria categoria, int stock, String descripcion, String codigo, Double precio, String tipo, LocalDate fechaElaboracion, LocalDate fechaCaducidad, int condicion) {
         this.idProducto = idProducto;
-        this.nombre = nombre;
+        this.nombreProducto = nombreProducto;
+        //Categoria categoria = new Categoria();
+        categoria.setNombreCategoria(tipo);
         this.categoria = categoria;
+        this.stock = stock;
+        this.descripcion = descripcion;
+        this.codigo = codigo;
         this.precio = precio;
+        this.fechaElaboracion = fechaElaboracion;
+        this.fechaCaducidad = fechaCaducidad;
+        this.condicion = condicion;
     }
-    //Get and setter
-    public void setIdProducto(Long idProducto) {
-        this.idProducto = idProducto;
-    }
+
     public Long getIdProducto() {
         return idProducto;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getNombreProducto() {
+        return nombreProducto;
     }
 
-    public String getCategoria() {
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
+
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public Double getPrecio() {
@@ -56,6 +96,30 @@ public class Producto {
 
     public void setPrecio(Double precio) {
         this.precio = precio;
+    }
+
+    public LocalDate getFechaElaboracion() {
+        return fechaElaboracion;
+    }
+
+    public void setFechaElaboracion(LocalDate fechaElaboracion) {
+        this.fechaElaboracion = fechaElaboracion;
+    }
+
+    public LocalDate getFechaCaducidad() {
+        return fechaCaducidad;
+    }
+
+    public void setFechaCaducidad(LocalDate fechaCaducidad) {
+        this.fechaCaducidad = fechaCaducidad;
+    }
+
+    public int getCondicion() {
+        return condicion;
+    }
+
+    public void setCondicion(int condicion) {
+        this.condicion = condicion;
     }
 }
 
