@@ -38,6 +38,7 @@ public class ProductoServlet extends HttpServlet {
             out.println("<title>Lista de Productos</title>");
             out.println("<link rel='stylesheet' " +
                     "href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css'>");
+            out.println("<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css'>");
             out.println("</head>");
             out.println("<body class='bg-light'>");
 
@@ -77,13 +78,13 @@ public class ProductoServlet extends HttpServlet {
 
                 if (usernameOptional.isPresent()) {
                     out.println("<td>$" + p.getPrecio() + "</td>");
-                    out.println("<td>");
-                    out.println("<a class='btn btn-sm btn-success' href='"
+                    out.println("<td><a href=\""
                             + req.getContextPath()
                             + "/agregar-carro?id="
                             + p.getIdProducto()
-                            + "'>Agregar</a>");
-                    out.println("</td>");
+                            + "\" class=\"btn btn-primary\">"
+                            + "<i class=\"bi bi-cart-plus\"></i>"
+                            + "</a></td>");
                 }
 
                 out.println("</tr>");
