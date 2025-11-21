@@ -7,6 +7,7 @@ package com.bryan.aplicacionweb.manejosesiones.services;
  * formato de array los datos para crear los productos.
  * */
 
+import com.bryan.aplicacionweb.manejosesiones.models.Categoria;
 import com.bryan.aplicacionweb.manejosesiones.models.Producto;
 
 import java.util.Arrays;
@@ -16,9 +17,7 @@ import java.util.Optional;
 public class ProductoServiceImpl implements ProductoService {
     @Override
     public List<Producto> listar() {
-        return Arrays.asList(new Producto(1L,"Laptop","Computación",250.25),
-                new Producto(2L,"Refrigeradora","Cocina",745.13),
-                new Producto(3L,"Cama","Dormitorio",350.12));
+        return List.of();
     }
 
     @Override

@@ -23,11 +23,15 @@ public class ItemCarro {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof ItemCarro)) return false;
 
-        ItemCarro itemCarro = (ItemCarro) o;
-        return Objects.equals(producto.getIdProducto(),itemCarro.producto.getIdProducto())
-                && Objects.equals(cantidad, itemCarro.cantidad);
+        ItemCarro that = (ItemCarro) o;
+        return this.producto.getIdProducto().equals(that.producto.getIdProducto());
+    }
+
+    @Override
+    public int hashCode() {
+        return producto.getIdProducto().hashCode();
     }
     public double getSubtotal(){
         return cantidad * producto.getPrecio();

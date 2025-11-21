@@ -9,7 +9,6 @@
 <head>
     <title>Carro de Compras</title>
 
-    <!-- Bootstrap CDN simple -->
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
@@ -18,10 +17,10 @@
 
 <div class="container mt-4 p-4 bg-white rounded shadow">
 
-    <h1 class="mb-4 text-center">Carro de Compras</h1>
+    <h1 class="text-center mb-4">Carro de Compras</h1>
 
     <%
-        if (detalleCarro == null || detalleCarro.getItems().isEmpty()) {
+        if (detalleCarro == null || detalleCarro.getItems() == null || detalleCarro.getItems().isEmpty()) {
     %>
 
     <div class="alert alert-warning text-center">
@@ -38,7 +37,7 @@
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
         <tr>
-            <th>Id Producto</th>
+            <th>ID Producto</th>
             <th>Nombre</th>
             <th>Precio</th>
             <th>Cantidad</th>
@@ -48,30 +47,27 @@
         <tbody>
 
         <%
-            for(ItemCarro item : detalleCarro.getItems()){
+            for(ItemCarro item : detalleCarro.getItems()) {
         %>
         <tr>
             <td><%= item.getProducto().getIdProducto() %></td>
-            <td><%= item.getProducto().getNombre() %></td>
+            <td><%= item.getProducto().getNombreProducto() %></td>
             <td>$<%= item.getProducto().getPrecio() %></td>
             <td><%= item.getCantidad() %></td>
             <td>$<%= item.getSubtotal() %></td>
         </tr>
         <% } %>
 
-        <!-- Subtotal -->
         <tr class="fw-bold">
             <td colspan="4" class="text-end">Subtotal:</td>
             <td>$<%= subtotal %></td>
         </tr>
 
-        <!-- IVA -->
         <tr class="fw-bold">
             <td colspan="4" class="text-end">IVA (15%):</td>
             <td>$<%= iva %></td>
         </tr>
 
-        <!-- Total final -->
         <tr class="fw-bold table-success">
             <td colspan="4" class="text-end">TOTAL:</td>
             <td>$<%= totalFinal %></td>
@@ -80,11 +76,8 @@
         </tbody>
     </table>
 
-    <!-- Botón para descargar PDF -->
     <form action="<%=request.getContextPath()%>/generar-pdf" method="GET">
-        <button type="submit" class="btn btn-danger mb-3">
-            Descargar PDF
-        </button>
+        <button type="submit" class="btn btn-danger mb-3">Descargar PDF</button>
     </form>
 
     <% } %>
