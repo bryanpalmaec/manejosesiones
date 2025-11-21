@@ -16,4 +16,14 @@ import java.util.Optional;
 public interface ProductoService {
     List<Producto> listar();
     Optional<Producto> porId(Long id);
+    // Agregar estos:
+    void activar(Long id);
+    void desactivar(Long id);
+
+    void guardar(Producto producto);
+
+    void actualizar(Producto producto);
+
+    void eliminar(Long id);
+
 }

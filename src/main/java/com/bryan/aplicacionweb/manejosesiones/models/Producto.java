@@ -24,7 +24,7 @@ public class Producto {
      **
      */
     public Producto() {
-
+        this.categoria = new Categoria();
     }
 
     public Producto(Long idProducto, String nombreProducto, Categoria categoria, int stock, String descripcion, String codigo, Double precio, String tipo, LocalDate fechaElaboracion, LocalDate fechaCaducidad, int condicion) {

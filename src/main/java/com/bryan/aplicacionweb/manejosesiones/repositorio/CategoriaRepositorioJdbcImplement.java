@@ -82,4 +82,14 @@ public class CategoriaRepositorioJdbcImplement implements Repositorio<Categoria>
             ps.executeUpdate();
         }
     }
+
+    @Override
+    public void activar(Long id) throws SQLException {
+    }
+
+    @Override
+    public void desactivar(Long id) throws SQLException {
+
+    }
+
 }

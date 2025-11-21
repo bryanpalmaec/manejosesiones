@@ -51,6 +51,8 @@ public class ProductoServlet extends HttpServlet {
                         + usernameOptional.get()
                         + "</strong>, bienvenido!</div>");
             }
+            out.println("<a href='" + req.getContextPath() + "/crear' class='btn btn-success mb-3'>");
+            out.println("<i class='bi bi-plus-circle'></i> Crear Producto</a>");
 
             out.println("<table class='table table-bordered table-striped'>");
             out.println("<thead class='table-dark'>");
@@ -62,6 +64,7 @@ public class ProductoServlet extends HttpServlet {
 
             if (usernameOptional.isPresent()) {
                 out.println("<th>Precio</th>");
+                out.println("<th>Estado</th>");
                 out.println("<th>Opciones</th>");
             }
 
@@ -77,15 +80,39 @@ public class ProductoServlet extends HttpServlet {
                 out.println("<td>" + p.getFechaElaboracion() + "</td>");
 
                 if (usernameOptional.isPresent()) {
+
+                    // Precio
                     out.println("<td>$" + p.getPrecio() + "</td>");
-                    out.println("<td><a href=\""
-                            + req.getContextPath()
-                            + "/agregar-carro?id="
-                            + p.getIdProducto()
-                            + "\" class=\"btn btn-primary\">"
-                            + "<i class=\"bi bi-cart-plus\"></i>"
-                            + "</a></td>");
+
+                    // Estado (condición)
+                    String estadoBadge = p.getCondicion() == 1
+                            ? "<span class='badge bg-success'>Activo</span>"
+                            : "<span class='badge bg-secondary'>Inactivo</span>";
+                    out.println("<td>" + estadoBadge + "</td>");
+
+                    // Opciones
+                    out.println("<td>");
+
+                    // Botón AGREGAR AL CARRO
+                    out.println("<a href='" + req.getContextPath() + "/agregar-carro?id=" + p.getIdProducto()
+                            + "' class='btn btn-primary btn-sm me-1'><i class='bi bi-cart-plus'></i></a>");
+
+                    // Botón EDITAR
+                    out.println("<a href='" + req.getContextPath() + "/editar?id=" + p.getIdProducto()
+                            + "' class='btn btn-warning btn-sm me-1'><i class='bi bi-pencil-square'></i></a>");
+
+                    // Activar/Desactivar
+                    if (p.getCondicion() == 1) {
+                        out.println("<a href='" + req.getContextPath() + "/desactivar?id=" + p.getIdProducto()
+                                + "' class='btn btn-danger btn-sm'><i class='bi bi-x-circle'></i></a>");
+                    } else {
+                        out.println("<a href='" + req.getContextPath() + "/activar?id=" + p.getIdProducto()
+                                + "' class='btn btn-success btn-sm'><i class='bi bi-check-circle'></i></a>");
+                    }
+
+                    out.println("</td>");
                 }
+
 
                 out.println("</tr>");
             });

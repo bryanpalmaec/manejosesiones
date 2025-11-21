@@ -33,4 +33,50 @@ public class ProductoServiceJdbcImplement implements ProductoService {
         }
     }
 
+    @Override
+    public void guardar(Producto producto){
+        try {
+            repositorioJdbc.guardar(producto);
+        } catch (SQLException e) {
+            throw new ServiceJdbcException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public void actualizar(Producto producto){
+        try {
+            repositorioJdbc.guardar(producto);
+        } catch (SQLException e) {
+            throw new ServiceJdbcException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public void eliminar(Long id){
+        try {
+            repositorioJdbc.eliminar(id);
+        } catch (SQLException e) {
+            throw new ServiceJdbcException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public void activar(Long id){
+        try {
+            repositorioJdbc.activar(id);
+        } catch (SQLException e) {
+            throw new ServiceJdbcException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public void desactivar(Long id){
+        try {
+            repositorioJdbc.desactivar(id);
+        } catch (SQLException e) {
+            throw new ServiceJdbcException(e.getMessage(), e.getCause());
+        }
+    }
+
+
 }

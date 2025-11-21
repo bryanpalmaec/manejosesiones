@@ -24,5 +24,30 @@ public class ProductoServiceImpl implements ProductoService {
     public Optional<Producto> porId(Long id) {
         return listar().stream().filter(p -> p.getIdProducto().equals(id)).findAny();
     }
+
+    @Override
+    public void activar(Long id) {
+
+    }
+
+    @Override
+    public void desactivar(Long id) {
+
+    }
+
+    @Override
+    public void guardar(Producto producto) {
+
+    }
+
+    @Override
+    public void actualizar(Producto producto) {
+
+    }
+
+    @Override
+    public void eliminar(Long id) {
+
+    }
 }
 

@@ -14,6 +14,8 @@ public interface Repositorio<T> {
     void guardar(T t) throws SQLException;
     //Implementamos un metodo para eliminar
     void eliminar(Long id) throws SQLException;
-    //Implementar un metodo para desactivar el producto
     //Implementar un metodo para activar el producto
+    void activar(Long id) throws SQLException;
+    //Implementar un metodo para desactivar el producto
+    void desactivar(Long id) throws SQLException;
 }

@@ -86,12 +86,12 @@ public class ProductoRepositorioJdbcImplement implements Repositorio<Producto> {
 
         if (producto.getIdProducto() != null && producto.getIdProducto() > 0) {
 
-            sql = "UPDATE producto SET nombreProducto=?, idCategoria=?, stock=?, precio=?, " +
+            sql = "UPDATE producto SET productoNombre=?, idCategoria=?, stock=?, precio=?, " +
                     "descripcion=?, codigo=?, fecha_elaboracion=?, fecha_caducidad=? WHERE id=?";
 
         } else {
 
-            sql = "INSERT INTO producto (nombreProducto, idCategoria, stock, precio, descripcion, codigo, " +
+            sql = "INSERT INTO producto (productoNombre, idCategoria, stock, precio, descripcion, codigo, " +
                     "fecha_elaboracion, fecha_caducidad, condicion) VALUES (?,?,?,?,?,?,?,?,1)";
         }
 
@@ -122,4 +122,23 @@ public class ProductoRepositorioJdbcImplement implements Repositorio<Producto> {
             stmt.executeUpdate();
         }
     }
+
+    @Override
+    public void activar(Long id) throws SQLException {
+        String sql = "UPDATE producto SET condicion = 1 WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        }
+    }
+
+    @Override
+    public void desactivar(Long id) throws SQLException {
+        String sql = "UPDATE producto SET condicion = 0 WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        }
+    }
+
 }
