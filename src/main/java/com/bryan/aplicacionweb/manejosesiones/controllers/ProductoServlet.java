@@ -109,6 +109,11 @@ public class ProductoServlet extends HttpServlet {
                         out.println("<a href='" + req.getContextPath() + "/activar?id=" + p.getIdProducto()
                                 + "' class='btn btn-success btn-sm'><i class='bi bi-check-circle'></i></a>");
                     }
+                    // Botón ELIMINAR
+                    out.println("<a href='" + req.getContextPath() + "/eliminar?id=" + p.getIdProducto()
+                            + "' class='btn btn-outline-danger btn-sm me-1' "
+                            + "onclick=\"return confirm('¿Está seguro de eliminar este producto?');\">"
+                            + "<i class='bi bi-trash'></i></a>");
 
                     out.println("</td>");
                 }
