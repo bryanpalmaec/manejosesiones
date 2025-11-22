@@ -8,6 +8,7 @@ package com.bryan.aplicacionweb.manejosesiones.services;
  * */
 
 
+import com.bryan.aplicacionweb.manejosesiones.models.Categoria;
 import com.bryan.aplicacionweb.manejosesiones.models.Producto;
 
 import java.util.List;
@@ -25,5 +26,6 @@ public interface ProductoService {
     void actualizar(Producto producto);
 
     void eliminar(Long id);
-
+    List<Categoria> listarCategoria();
+    Optional<Categoria> porIdCategoria(Long id);
 }

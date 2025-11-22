@@ -61,6 +61,7 @@ public class ProductoServlet extends HttpServlet {
             out.println("<th>Nombre</th>");
             out.println("<th>Stock</th>");
             out.println("<th>Fecha Producción</th>");
+            out.println("<th>Categoría</th>");  // 🔥 AGREGADO AQUÍ
 
             if (usernameOptional.isPresent()) {
                 out.println("<th>Precio</th>");
@@ -79,29 +80,30 @@ public class ProductoServlet extends HttpServlet {
                 out.println("<td>" + p.getStock() + "</td>");
                 out.println("<td>" + p.getFechaElaboracion() + "</td>");
 
+                // categoria
+                if (p.getCategoria() != null) {
+                    out.println("<td>" + p.getCategoria().getNombreCategoria() + "</td>");
+                } else {
+                    out.println("<td><em>Sin categoría</em></td>");
+                }
+
                 if (usernameOptional.isPresent()) {
 
-                    // Precio
                     out.println("<td>$" + p.getPrecio() + "</td>");
 
-                    // Estado (condición)
                     String estadoBadge = p.getCondicion() == 1
                             ? "<span class='badge bg-success'>Activo</span>"
                             : "<span class='badge bg-secondary'>Inactivo</span>";
                     out.println("<td>" + estadoBadge + "</td>");
 
-                    // Opciones
                     out.println("<td>");
 
-                    // Botón AGREGAR AL CARRO
                     out.println("<a href='" + req.getContextPath() + "/agregar-carro?id=" + p.getIdProducto()
                             + "' class='btn btn-primary btn-sm me-1'><i class='bi bi-cart-plus'></i></a>");
 
-                    // Botón EDITAR
                     out.println("<a href='" + req.getContextPath() + "/editar?id=" + p.getIdProducto()
                             + "' class='btn btn-warning btn-sm me-1'><i class='bi bi-pencil-square'></i></a>");
 
-                    // Activar/Desactivar
                     if (p.getCondicion() == 1) {
                         out.println("<a href='" + req.getContextPath() + "/desactivar?id=" + p.getIdProducto()
                                 + "' class='btn btn-danger btn-sm'><i class='bi bi-x-circle'></i></a>");
@@ -109,7 +111,7 @@ public class ProductoServlet extends HttpServlet {
                         out.println("<a href='" + req.getContextPath() + "/activar?id=" + p.getIdProducto()
                                 + "' class='btn btn-success btn-sm'><i class='bi bi-check-circle'></i></a>");
                     }
-                    // Botón ELIMINAR
+
                     out.println("<a href='" + req.getContextPath() + "/eliminar?id=" + p.getIdProducto()
                             + "' class='btn btn-outline-danger btn-sm me-1' "
                             + "onclick=\"return confirm('¿Está seguro de eliminar este producto?');\">"
@@ -117,7 +119,6 @@ public class ProductoServlet extends HttpServlet {
 
                     out.println("</td>");
                 }
-
 
                 out.println("</tr>");
             });

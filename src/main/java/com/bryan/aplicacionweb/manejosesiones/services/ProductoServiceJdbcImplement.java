@@ -1,7 +1,9 @@
 package com.bryan.aplicacionweb.manejosesiones.services;
 
+import com.bryan.aplicacionweb.manejosesiones.models.Categoria;
 import com.bryan.aplicacionweb.manejosesiones.models.Producto;
 import com.bryan.aplicacionweb.manejosesiones.repositorio.ProductoRepositorioJdbcImplement;
+import com.bryan.aplicacionweb.manejosesiones.repositorio.Repositorio;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,7 +12,8 @@ import java.util.Optional;
 
 public class ProductoServiceJdbcImplement implements ProductoService {
     //Declaramos una variable de tipo ProductoRepositorioJdbcImplement
-    private ProductoRepositorioJdbcImplement repositorioJdbc;
+    private Repositorio<Producto> repositorioJdbc;
+    private Repositorio<Categoria> repositorioCategoriaJdbc;
     //Implementamos un constructor para traer la conexion
     public ProductoServiceJdbcImplement(Connection connection){
         this.repositorioJdbc = new ProductoRepositorioJdbcImplement(connection);
@@ -57,6 +60,24 @@ public class ProductoServiceJdbcImplement implements ProductoService {
             repositorioJdbc.eliminar(id);
         } catch (SQLException e) {
             throw new ServiceJdbcException(e.getMessage(), e.getCause());
+        }
+    }
+
+    @Override
+    public List<Categoria> listarCategoria() {
+        try{
+            return repositorioCategoriaJdbc.listar();
+        }catch (SQLException throwables){
+            throw new ServiceJdbcException(throwables.getMessage(), throwables.getCause());
+        }
+    }
+
+    @Override
+    public Optional<Categoria> porIdCategoria(Long id) {
+        try{
+            return Optional.ofNullable(repositorioCategoriaJdbc.porId(id));
+        }catch (SQLException throwables){
+            throw new ServiceJdbcException(throwables.getMessage(), throwables.getCause());
         }
     }
 

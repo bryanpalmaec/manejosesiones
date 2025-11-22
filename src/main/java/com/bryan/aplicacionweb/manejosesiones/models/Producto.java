@@ -27,12 +27,13 @@ public class Producto {
         this.categoria = new Categoria();
     }
 
-    public Producto(Long idProducto, String nombreProducto, Categoria categoria, int stock, String descripcion, String codigo, Double precio, String tipo, LocalDate fechaElaboracion, LocalDate fechaCaducidad, int condicion) {
+    public Producto(Long idProducto, String nombreProducto, Categoria categoria, int stock,
+                    String descripcion, String codigo, Double precio,
+                    LocalDate fechaElaboracion, LocalDate fechaCaducidad, int condicion) {
+
         this.idProducto = idProducto;
         this.nombreProducto = nombreProducto;
-        //Categoria categoria = new Categoria();
-        categoria.setNombreCategoria(tipo);
-        this.categoria = categoria;
+        this.categoria = categoria;  // ✔ usar la categoría real que viene del repositorio
         this.stock = stock;
         this.descripcion = descripcion;
         this.codigo = codigo;
@@ -41,6 +42,7 @@ public class Producto {
         this.fechaCaducidad = fechaCaducidad;
         this.condicion = condicion;
     }
+
 
     public Long getIdProducto() {
         return idProducto;

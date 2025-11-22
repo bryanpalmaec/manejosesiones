@@ -17,35 +17,24 @@ public class CategoriaRepositorioJdbcImplement implements Repositorio<Categoria>
     @Override
     public List<Categoria> listar() throws SQLException {
         List<Categoria> categorias = new ArrayList<>();
-
-        String sql = "SELECT id_categoria, nombre_categoria FROM categorias";
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
+        try(Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from categoria")){
             while (rs.next()) {
-                Categoria c = new Categoria();
-                c.setIdCategoria(rs.getLong("id_categoria"));
-                c.setNombreCategoria(rs.getString("nombre_categoria"));
-                categorias.add(c);
+                Categoria categoria = getCategoria(rs);
+                categorias.add(categoria);
             }
         }
-
         return categorias;
     }
 
     @Override
     public Categoria porId(Long id) throws SQLException {
         Categoria categoria = null;
-
-        String sql = "SELECT id_categoria, nombre_categoria FROM categorias WHERE id_categoria = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, id);
-
-            try (ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement stmt = conn.prepareStatement("select * from categoria where id=?")) {
+            stmt.setLong(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    categoria = new Categoria();
-                    categoria.setIdCategoria(rs.getLong("id_categoria"));
-                    categoria.setNombreCategoria(rs.getString("nombre_categoria"));
+                    categoria = getCategoria(rs);
                 }
             }
         }
@@ -58,9 +47,9 @@ public class CategoriaRepositorioJdbcImplement implements Repositorio<Categoria>
         String sql;
 
         if (categoria.getIdCategoria() != null && categoria.getIdCategoria() > 0) {
-            sql = "UPDATE categorias SET nombre_categoria=? WHERE id_categoria=?";
+            sql = "UPDATE categoria SET nombreCategoria=? WHERE id=?";
         } else {
-            sql = "INSERT INTO categorias(nombre_categoria) VALUES(?)";
+            sql = "INSERT INTO categoria(nombreCategoria) VALUES(?)";
         }
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -76,7 +65,7 @@ public class CategoriaRepositorioJdbcImplement implements Repositorio<Categoria>
 
     @Override
     public void eliminar(Long id) throws SQLException {
-        String sql = "DELETE FROM categorias WHERE id_categoria=?";
+        String sql = "DELETE FROM categoria WHERE id=?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
@@ -90,6 +79,14 @@ public class CategoriaRepositorioJdbcImplement implements Repositorio<Categoria>
     @Override
     public void desactivar(Long id) throws SQLException {
 
+    }
+
+    private static Categoria getCategoria(ResultSet rs) throws SQLException {
+        Categoria categoria = new Categoria();
+        categoria.setNombreCategoria(rs.getString("nombreCategoria"));
+        categoria.setDescripcionCategoria(rs.getString("descripcion"));
+        categoria.setIdCategoria(rs.getLong("id"));
+        return categoria;
     }
 
 }

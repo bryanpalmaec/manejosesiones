@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.bryan.aplicacionweb.manejosesiones.models.Producto" %>
+<%@ page import="com.bryan.aplicacionweb.manejosesiones.models.Categoria" %>
+<%@ page import="java.util.List" %>
 <%
     Producto producto = (Producto) request.getAttribute("producto");
     boolean isEdit = producto != null && producto.getIdProducto() != null;
@@ -39,12 +41,31 @@
                    value="<%= (producto != null) ? producto.getNombreProducto() : "" %>">
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">ID Categoría *</label>
-            <input type="number" name="idCategoria" class="form-control" required
-                   value="<%= (producto != null && producto.getCategoria() != null)
-                            ? producto.getCategoria().getIdCategoria() : "" %>">
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Categoría *</label>
+                <select name="idCategoria" class="form-select" required>
+                    <option value="">Seleccione una categoría</option>
+
+                    <%
+                        List<Categoria> categorias = (List<Categoria>) request.getAttribute("categorias");
+                        if (categorias != null) {
+                            for (Categoria c : categorias) {
+                                boolean selected = (producto != null
+                                        && producto.getCategoria() != null
+                                        && producto.getCategoria().getIdCategoria().equals(c.getIdCategoria()));
+                    %>
+
+                    <option value="<%= c.getIdCategoria() %>" <%= selected ? "selected" : "" %>>
+                        <%= c.getNombreCategoria() %>
+                    </option>
+
+                    <%
+                            }
+                        }
+                    %>
+                </select>
+            </div>
+
 
         <div class="mb-3">
             <label class="form-label">Stock *</label>

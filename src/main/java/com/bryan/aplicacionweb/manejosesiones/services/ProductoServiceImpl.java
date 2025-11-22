@@ -49,5 +49,15 @@ public class ProductoServiceImpl implements ProductoService {
     public void eliminar(Long id) {
 
     }
+
+    @Override
+    public List<Categoria> listarCategoria() {
+        return List.of();
+    }
+
+    @Override
+    public Optional<Categoria> porIdCategoria(Long id) {
+        return Optional.empty();
+    }
 }
 

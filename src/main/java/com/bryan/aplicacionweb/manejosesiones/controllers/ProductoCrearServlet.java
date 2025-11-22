@@ -3,6 +3,7 @@ package com.bryan.aplicacionweb.manejosesiones.controllers;
 
 import com.bryan.aplicacionweb.manejosesiones.models.Categoria;
 import com.bryan.aplicacionweb.manejosesiones.models.Producto;
+import com.bryan.aplicacionweb.manejosesiones.repositorio.CategoriaRepositorioJdbcImplement;
 import com.bryan.aplicacionweb.manejosesiones.services.ProductoServiceJdbcImplement;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,7 +11,10 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.servlet.http.*;
 
@@ -21,6 +25,20 @@ public class ProductoCrearServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        Connection conn = (Connection) req.getAttribute("conn");
+
+        // Usar directamente tu repositorio existente
+        CategoriaRepositorioJdbcImplement categoriaRepo =
+                new CategoriaRepositorioJdbcImplement(conn);
+
+        List<Categoria> categorias = new ArrayList<>();
+        try {
+            categorias = categoriaRepo.listar();
+        } catch (SQLException e) {
+            throw new ServletException("Error consultando categorías", e);
+        }
+
+        req.setAttribute("categorias", categorias);
 
         req.setAttribute("accion", "Crear");
         req.getRequestDispatcher("//producto-form.jsp").forward(req, resp);
